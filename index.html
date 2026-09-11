@@ -262,9 +262,8 @@ p{margin:0 0 1em}
   background:#fff;position:relative;transition:.15s}
 .pack:hover{border-color:var(--volt)}
 .pack.active{border-color:var(--volt);box-shadow:0 0 0 3px rgba(227,48,38,.15);background:var(--mist)}
-.pack .pk-name{font-family:"Barlow Condensed";font-weight:800;font-size:15px;line-height:1}
-.pack .pk-price{font-family:"Barlow Condensed";font-weight:900;font-size:20px;margin-top:6px}
-.pack .pk-each{font-size:11px;color:var(--muted);font-weight:600;margin-top:2px}
+.pack .pk-name{font-family:"Barlow Condensed";font-weight:900;font-size:19px;line-height:1;margin-top:4px}
+.pack .pk-sub{font-size:12px;color:var(--muted);font-weight:600;margin-top:6px}
 .pack .pk-badge{position:absolute;top:-9px;left:50%;transform:translateX(-50%);white-space:nowrap;
   background:var(--ink);color:#fff;font-family:"Barlow Condensed";font-weight:800;font-size:9.5px;text-transform:uppercase;
   letter-spacing:.06em;padding:3px 8px;border-radius:999px}
@@ -658,13 +657,11 @@ p{margin:0 0 1em}
           <div class="opt" data-type="onetime">
             <span class="radio"></span>
             <div class="otxt"><b>One-time purchase</b><small>Ships once. No commitment.</small></div>
-            <div class="price"><div class="now" id="otNow">$64.99</div><div class="was" id="otWas">$79.98</div></div>
           </div>
           <div class="opt active" data-type="sub">
             <span class="best">Best value</span>
             <span class="radio"></span>
             <div class="otxt"><b>Subscribe &amp; Save 15%</b><small>Skip, pause, or cancel anytime</small><span class="save-pill">Save 15% + free shipping</span></div>
-            <div class="price"><div class="now" id="subNow">$55.24</div><div class="was" id="subWas">$79.98</div></div>
           </div>
         </div>
 
@@ -673,14 +670,7 @@ p{margin:0 0 1em}
           <div class="freq-grid" id="freqGrid"><!-- frequency injected by JS --></div>
         </div>
 
-        <div class="bb-total">
-          <div><div class="lab">Your price</div><div class="per" id="bbPer">≈ $0.30 per wash &amp; dry</div></div>
-          <div class="val" id="bbTotal">$29.74</div>
-        </div>
-
-        <div class="bb-save" id="bbSave">💰 You save $10.25 · 26% off retail</div>
-
-        <a href="https://cleanguy.com" target="_blank" rel="noopener" class="btn btn-primary btn-lg btn-block" id="bbCta">Add to Cart · Subscribe &amp; Save</a>
+        <a href="https://cleanguy.com" target="_blank" rel="noopener" class="btn btn-primary btn-lg btn-block" id="bbCta">See Price &amp; Add to Cart →</a>
 
         <div class="bb-secure">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
@@ -697,7 +687,7 @@ p{margin:0 0 1em}
 
         <div class="bb-assure">
           <span><svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3Z" fill="none" stroke="#12B76A" stroke-width="2"/></svg> 60-day guarantee</span>
-          <span><svg width="15" height="15" viewBox="0 0 24 24"><path d="M3 7h13v8H3zM16 10h4l1 3v2h-5" fill="none" stroke="#00874B" stroke-width="2" stroke-linejoin="round"/><circle cx="7" cy="17" r="2" fill="none" stroke="#00874B" stroke-width="2"/><circle cx="17" cy="17" r="2" fill="none" stroke="#00874B" stroke-width="2"/></svg> Free shipping over $49</span>
+          <span><svg width="15" height="15" viewBox="0 0 24 24"><path d="M3 7h13v8H3zM16 10h4l1 3v2h-5" fill="none" stroke="#00874B" stroke-width="2" stroke-linejoin="round"/><circle cx="7" cy="17" r="2" fill="none" stroke="#00874B" stroke-width="2"/><circle cx="17" cy="17" r="2" fill="none" stroke="#00874B" stroke-width="2"/></svg> Free shipping on subscriptions</span>
           <span><svg width="15" height="15" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 1 3 6.2M4 20v-4h4" fill="none" stroke="#00874B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Skip or cancel anytime</span>
         </div>
       </div>
@@ -779,8 +769,7 @@ p{margin:0 0 1em}
       <img id="sbImg" loading="lazy" decoding="async" src="https://cdn.shopify.com/s/files/1/0708/2708/1773/files/Pine2_Main_copy_efaf6b44-1eec-403c-b43b-bc4b4cfb1aae.jpg?v=1785940070" alt="Selected scent">
       <div class="sb-info"><b id="sbName">Pine &amp; Cedar</b><small>2-in-1 detergent · 100 loads</small></div>
     </div>
-    <div class="sb-price" id="sbPrice">$29.74<span class="was">$39.99</span></div>
-    <a href="#buy" class="btn btn-primary sb-cta" id="sbCta">Add to Cart</a>
+    <a href="#buy" class="btn btn-primary sb-cta" id="sbCta">See Price &amp; Add to Cart →</a>
   </div>
 </div>
 
@@ -821,9 +810,9 @@ p{margin:0 0 1em}
     {id:"free",   name:"Free & Clear",        note:"Zero fragrance",     color:"#9fb0c4", pos:"50% 50%", img:CDN+"Main_Image-Zero_Trace_copy_4_1.png?v=1785985693", url:"https://cleanguy.com/collections/all"}
   ];
   var PACKS=[
-    {id:1,bottles:1,name:"1 Bottle",base:34.99,compare:39.99},
-    {id:2,bottles:2,name:"2 Bottles",base:64.99,compare:79.98,badge:"Most Popular",pop:true},
-    {id:3,bottles:3,name:"3 Bottles",base:89.99,compare:119.97,badge:"Best Value"}
+    {id:1,bottles:1,name:"1 Bottle",loads:"100 loads"},
+    {id:2,bottles:2,name:"2 Bottles",loads:"200 loads",badge:"Most Popular",pop:true},
+    {id:3,bottles:3,name:"3 Bottles",loads:"300 loads",badge:"Best Value"}
   ];
   var FREQS=[
     {id:"1m",label:"Every month"},
@@ -855,22 +844,18 @@ p{margin:0 0 1em}
 
   var bbVisual=document.querySelector(".bb-visual");
   var bbImg=document.getElementById("bbImg"),bbDot=document.getElementById("bbDot"),
-      bbScentTag=document.getElementById("bbScentTag"),bbTotal=document.getElementById("bbTotal"),
-      bbPer=document.getElementById("bbPer"),bbCta=document.getElementById("bbCta"),bbSave=document.getElementById("bbSave"),
-      sbImg=document.getElementById("sbImg"),sbName=document.getElementById("sbName"),
-      sbPrice=document.getElementById("sbPrice"),sbCta=document.getElementById("sbCta");
+      bbScentTag=document.getElementById("bbScentTag"),bbCta=document.getElementById("bbCta"),
+      sbImg=document.getElementById("sbImg"),sbName=document.getElementById("sbName"),sbCta=document.getElementById("sbCta");
 
   var packGrid=document.getElementById("packGrid"),freqGrid=document.getElementById("freqGrid"),
-      bbFreq=document.getElementById("bbFreq"),
-      otNow=document.getElementById("otNow"),otWas=document.getElementById("otWas"),
-      subNow=document.getElementById("subNow"),subWas=document.getElementById("subWas");
+      bbFreq=document.getElementById("bbFreq");
 
   PACKS.forEach(function(p){
     var el=document.createElement("div");
     el.className="pack"+(p.pop?" pop":"")+(p.id===state.packId?" active":"");
     el.setAttribute("role","button");el.setAttribute("tabindex","0");el.dataset.id=p.id;
     el.innerHTML=(p.badge?'<span class="pk-badge">'+p.badge+'</span>':'')+
-      '<div class="pk-name">'+p.name+'</div><div class="pk-price"></div><div class="pk-each"></div>'+
+      '<div class="pk-name">'+p.name+'</div><div class="pk-sub">'+p.loads+'</div>'+
       '<span class="pk-chk"><svg width="9" height="9" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
     el.addEventListener("click",function(){state.packId=p.id;render();});
     el.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();state.packId=p.id;render();}});
@@ -901,26 +886,12 @@ p{margin:0 0 1em}
   });
 
   function render(){
-    var pack=packById(state.packId), isSub=state.type==="sub";
-    var price=isSub?r2(pack.base*SUB):pack.base, compare=pack.compare;
-    var perBottle=price/pack.bottles, perLoad=price/(pack.bottles*100);
-    var saved=compare-price, pct=Math.round(saved/compare*100), freeShip=price>=49||isSub;
-    packGrid.querySelectorAll(".pack").forEach(function(el){
-      var p=packById(el.dataset.id), pp=isSub?r2(p.base*SUB):p.base;
-      el.classList.toggle("active",p.id===state.packId);
-      el.querySelector(".pk-price").textContent=money(pp);
-      el.querySelector(".pk-each").textContent=money(pp/p.bottles)+"/bottle";
-    });
-    otNow.textContent=money(pack.base);otWas.textContent=money(compare);
-    subNow.textContent=money(r2(pack.base*SUB));subWas.textContent=money(compare);
+    var isSub=state.type==="sub";
+    packGrid.querySelectorAll(".pack").forEach(function(el){el.classList.toggle("active",el.dataset.id==state.packId)});
     document.querySelectorAll(".opt").forEach(function(el){el.classList.toggle("active",el.dataset.type===state.type)});
     bbFreq.hidden=!isSub;
     freqGrid.querySelectorAll(".freq").forEach(function(el){el.classList.toggle("active",el.dataset.id===state.freq)});
-    bbTotal.textContent=money(price);
-    bbPer.innerHTML="≈ "+money(perLoad)+" per wash &amp; dry";
-    bbSave.textContent="💰 You save "+money(saved)+" · "+pct+"% off"+(freeShip?" · Free shipping":" · "+money(49-price)+" to free shipping");
-    sbPrice.innerHTML=money(price)+'<span class="was">'+money(compare)+'</span>';
-    bbCta.textContent=isSub?"Add to Cart · Subscribe & Save":"Add to Cart · One-Time";
+    bbCta.textContent=isSub?"See Price & Subscribe →":"See Price & Add to Cart →";
     bbCta.href=state.scent.url;sbCta.href=state.scent.url;
   }
 
