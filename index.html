@@ -257,6 +257,33 @@ p{margin:0 0 1em}
   display:none;align-items:center;justify-content:center}
 .scent.active .chk{display:flex}
 
+/* pack selector */
+.pack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:22px}
+.pack{border:1.6px solid var(--line);border-radius:14px;padding:14px 8px 12px;cursor:pointer;text-align:center;
+  background:#fff;position:relative;transition:.15s}
+.pack:hover{border-color:var(--volt)}
+.pack.active{border-color:var(--volt);box-shadow:0 0 0 3px rgba(227,48,38,.15);background:var(--mist)}
+.pack .pk-name{font-family:"Barlow Condensed";font-weight:800;font-size:15px;line-height:1}
+.pack .pk-price{font-family:"Barlow Condensed";font-weight:900;font-size:20px;margin-top:6px}
+.pack .pk-each{font-size:11px;color:var(--muted);font-weight:600;margin-top:2px}
+.pack .pk-badge{position:absolute;top:-9px;left:50%;transform:translateX(-50%);white-space:nowrap;
+  background:var(--ink);color:#fff;font-family:"Barlow Condensed";font-weight:800;font-size:9.5px;text-transform:uppercase;
+  letter-spacing:.06em;padding:3px 8px;border-radius:999px}
+.pack.pop .pk-badge{background:var(--save)}
+.pack .pk-chk{position:absolute;top:7px;right:7px;width:15px;height:15px;border-radius:50%;background:var(--volt);
+  display:none;align-items:center;justify-content:center}
+.pack.active .pk-chk{display:flex}
+
+/* delivery frequency */
+.bb-freq{margin:-6px 0 20px}
+.freq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.freq{border:1.6px solid var(--line);border-radius:12px;padding:12px 6px;cursor:pointer;text-align:center;
+  background:#fff;position:relative;transition:.15s}
+.freq:hover{border-color:var(--volt)}
+.freq.active{border-color:var(--volt);box-shadow:0 0 0 3px rgba(227,48,38,.15);background:var(--mist)}
+.freq .fq-label{font-family:"Barlow Condensed";font-weight:700;font-size:14px;line-height:1.1}
+.freq .fq-rec{display:block;font-size:9.5px;font-weight:800;color:var(--save);text-transform:uppercase;letter-spacing:.05em;margin-top:3px}
+
 /* purchase options */
 .buy-opts{display:grid;gap:11px;margin-bottom:20px}
 .opt{border:1.6px solid var(--line);border-radius:14px;padding:15px 16px;cursor:pointer;display:flex;
@@ -624,19 +651,27 @@ p{margin:0 0 1em}
           <!-- scents injected by JS -->
         </div>
 
-        <div class="bb-label">2 · Choose how you buy</div>
+        <div class="bb-label">2 · Choose your pack</div>
+        <div class="pack-grid" id="packGrid"><!-- packs injected by JS --></div>
+
+        <div class="bb-label">3 · Choose how you buy</div>
         <div class="buy-opts">
           <div class="opt" data-type="onetime">
             <span class="radio"></span>
             <div class="otxt"><b>One-time purchase</b><small>Ships once. No commitment.</small></div>
-            <div class="price"><div class="now">$34.99</div><div class="was">$39.99</div></div>
+            <div class="price"><div class="now" id="otNow">$64.99</div><div class="was" id="otWas">$79.98</div></div>
           </div>
           <div class="opt active" data-type="sub">
             <span class="best">Best value</span>
             <span class="radio"></span>
-            <div class="otxt"><b>Subscribe &amp; Save</b><small>Delivered on your schedule · skip anytime</small><span class="save-pill">Save 15% + free shipping</span></div>
-            <div class="price"><div class="now">$29.74</div><div class="was">$39.99</div></div>
+            <div class="otxt"><b>Subscribe &amp; Save 15%</b><small>Skip, pause, or cancel anytime</small><span class="save-pill">Save 15% + free shipping</span></div>
+            <div class="price"><div class="now" id="subNow">$55.24</div><div class="was" id="subWas">$79.98</div></div>
           </div>
+        </div>
+
+        <div class="bb-freq" id="bbFreq">
+          <div class="bb-label">4 · Delivery frequency</div>
+          <div class="freq-grid" id="freqGrid"><!-- frequency injected by JS --></div>
         </div>
 
         <div class="bb-total">
@@ -786,11 +821,23 @@ p{margin:0 0 1em}
     {id:"citrus", name:"Citrus & Sandalwood", note:"Crisp & woodsy",     color:"#e0952a", pos:"50% 42%", img:CDN+"CS2_Main_copy_b0e981b7-3bd8-4d0a-9f36-171ed50bc89d.jpg?v=1785940070", url:"https://cleanguy.com/products/laundry-detergent-only-citrus-sandalwood"},
     {id:"free",   name:"Free & Clear",        note:"Zero fragrance",     color:"#9fb0c4", pos:"50% 50%", img:CDN+"Main_Image-Zero_Trace_copy_4_1.png?v=1785985693", url:"https://cleanguy.com/collections/all"}
   ];
-  var WAS=39.99;
-  var PRICES={onetime:{now:34.99,per:"≈ $0.35 per wash & dry",label:"Add to Cart — One-Time"},
-              sub:{now:29.74,per:"≈ $0.30 per wash & dry",label:"Add to Cart — Subscribe & Save"}};
+  var PACKS=[
+    {id:1,bottles:1,name:"1 Bottle",base:34.99,compare:39.99},
+    {id:2,bottles:2,name:"2 Bottles",base:64.99,compare:79.98,badge:"Most Popular",pop:true},
+    {id:3,bottles:3,name:"3 Bottles",base:89.99,compare:119.97,badge:"Best Value"}
+  ];
+  var FREQS=[
+    {id:"1m",label:"Every month"},
+    {id:"2m",label:"Every 2 months",rec:true},
+    {id:"3m",label:"Every 3 months"}
+  ];
+  var SUB=0.85; // subscribe = 15% off
+  function r2(n){return Math.round(n*100)/100;}
+  function money(n){return "$"+n.toFixed(2);}
+  function packById(id){return PACKS.filter(function(p){return p.id==id})[0];}
   var defScent=scents.filter(function(s){return s.popular})[0]||scents[0];
-  var state={scent:defScent,type:"sub"};
+  var defPack=PACKS.filter(function(p){return p.pop})[0]||PACKS[0];
+  var state={scent:defScent,packId:defPack.id,type:"sub",freq:"2m"};
 
   var grid=document.getElementById("scentGrid");
   scents.forEach(function(s,i){
@@ -814,6 +861,32 @@ p{margin:0 0 1em}
       sbImg=document.getElementById("sbImg"),sbName=document.getElementById("sbName"),
       sbPrice=document.getElementById("sbPrice"),sbCta=document.getElementById("sbCta");
 
+  var packGrid=document.getElementById("packGrid"),freqGrid=document.getElementById("freqGrid"),
+      bbFreq=document.getElementById("bbFreq"),
+      otNow=document.getElementById("otNow"),otWas=document.getElementById("otWas"),
+      subNow=document.getElementById("subNow"),subWas=document.getElementById("subWas");
+
+  PACKS.forEach(function(p){
+    var el=document.createElement("div");
+    el.className="pack"+(p.pop?" pop":"")+(p.id===state.packId?" active":"");
+    el.setAttribute("role","button");el.setAttribute("tabindex","0");el.dataset.id=p.id;
+    el.innerHTML=(p.badge?'<span class="pk-badge">'+p.badge+'</span>':'')+
+      '<div class="pk-name">'+p.name+'</div><div class="pk-price"></div><div class="pk-each"></div>'+
+      '<span class="pk-chk"><svg width="9" height="9" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+    el.addEventListener("click",function(){state.packId=p.id;render();});
+    el.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();state.packId=p.id;render();}});
+    packGrid.appendChild(el);
+  });
+  FREQS.forEach(function(f){
+    var el=document.createElement("div");
+    el.className="freq"+(f.id===state.freq?" active":"");
+    el.setAttribute("role","button");el.setAttribute("tabindex","0");el.dataset.id=f.id;
+    el.innerHTML='<div class="fq-label">'+f.label+'</div>'+(f.rec?'<span class="fq-rec">Recommended</span>':'');
+    el.addEventListener("click",function(){state.freq=f.id;render();});
+    el.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();state.freq=f.id;render();}});
+    freqGrid.appendChild(el);
+  });
+
   function selectScent(id){
     state.scent=scents.filter(function(s){return s.id===id})[0];
     document.querySelectorAll(".scent").forEach(function(el){el.classList.toggle("active",el.dataset.id===id)});
@@ -822,27 +895,35 @@ p{margin:0 0 1em}
     bbDot.style.background=state.scent.color;
     bbScentTag.innerHTML=state.scent.name;
     sbImg.src=state.scent.img;sbName.innerHTML=state.scent.name;
-    updateCta();
-  }
-  function selectType(t){
-    state.type=t;
-    document.querySelectorAll(".opt").forEach(function(el){el.classList.toggle("active",el.dataset.type===t)});
-    var p=PRICES[t];
-    bbTotal.textContent="$"+p.now.toFixed(2);
-    bbPer.innerHTML=p.per;
-    var saved=(WAS-p.now), pct=Math.round(saved/WAS*100);
-    bbSave.textContent="💰 You save $"+saved.toFixed(2)+" — "+pct+"% off retail";
-    sbPrice.innerHTML="$"+p.now.toFixed(2)+'<span class="was">$'+WAS.toFixed(2)+'</span>';
-    updateCta();
-  }
-  function updateCta(){
-    bbCta.textContent=PRICES[state.type].label;
-    bbCta.href=state.scent.url;
-    sbCta.href=state.scent.url;
+    render();
   }
   document.querySelectorAll(".opt").forEach(function(el){
-    el.addEventListener("click",function(){selectType(el.dataset.type)});
+    el.addEventListener("click",function(){state.type=el.dataset.type;render();});
   });
+
+  function render(){
+    var pack=packById(state.packId), isSub=state.type==="sub";
+    var price=isSub?r2(pack.base*SUB):pack.base, compare=pack.compare;
+    var perBottle=price/pack.bottles, perLoad=price/(pack.bottles*100);
+    var saved=compare-price, pct=Math.round(saved/compare*100), freeShip=price>=49||isSub;
+    packGrid.querySelectorAll(".pack").forEach(function(el){
+      var p=packById(el.dataset.id), pp=isSub?r2(p.base*SUB):p.base;
+      el.classList.toggle("active",p.id===state.packId);
+      el.querySelector(".pk-price").textContent=money(pp);
+      el.querySelector(".pk-each").textContent=money(pp/p.bottles)+"/bottle";
+    });
+    otNow.textContent=money(pack.base);otWas.textContent=money(compare);
+    subNow.textContent=money(r2(pack.base*SUB));subWas.textContent=money(compare);
+    document.querySelectorAll(".opt").forEach(function(el){el.classList.toggle("active",el.dataset.type===state.type)});
+    bbFreq.hidden=!isSub;
+    freqGrid.querySelectorAll(".freq").forEach(function(el){el.classList.toggle("active",el.dataset.id===state.freq)});
+    bbTotal.textContent=money(price);
+    bbPer.innerHTML="≈ "+money(perLoad)+" per wash &amp; dry";
+    bbSave.textContent="💰 You save "+money(saved)+" — "+pct+"% off"+(freeShip?" · Free shipping":" · "+money(49-price)+" to free shipping");
+    sbPrice.innerHTML=money(price)+'<span class="was">'+money(compare)+'</span>';
+    bbCta.textContent=isSub?"Add to Cart — Subscribe & Save":"Add to Cart — One-Time";
+    bbCta.href=state.scent.url;sbCta.href=state.scent.url;
+  }
 
   // Sticky bar: reveal after some scroll, then stay through to the end
   var bar=document.getElementById("stickybar"),hero=document.querySelector(".hero");
@@ -852,7 +933,7 @@ p{margin:0 0 1em}
   window.addEventListener("scroll",onScroll,{passive:true});onScroll();
 
   selectScent(defScent.id);
-  selectType("sub");
+  render();
 })();
 </script>
 </body>
